@@ -1,5 +1,5 @@
 const express = require('express');
-const dal = require('../DB/dal');
+const dal = require('../models/dal');
 const router = express.Router();
 
 router.get('/:postId', (req, res) => {

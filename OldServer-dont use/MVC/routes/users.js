@@ -1,7 +1,7 @@
 const express = require('express');
 const todosRouter = require('./todos');
 const postsRouter = require('./posts');
-const dal = require('../DB/dal');
+const dal = require('../models/dal');
 
 const router = express.Router();
 

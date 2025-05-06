@@ -1,6 +1,6 @@
 const express = require('express');
 const commentsRouter = require('./comments');
-const dal = require('../DB/dal');
+const dal = require('../models/dal');
 const router = express.Router();
 
 router.use('/:postId/comments', commentsRouter);

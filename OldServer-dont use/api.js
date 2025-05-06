@@ -1,9 +1,9 @@
 const express=require('express');
 const cors = require('cors');
-const usersRouter = require('./MVC/Routers/users');
-const todosRouter = require('./MVC/Routers/todos');
-const postsRouter = require('./MVC/Routers/posts');
-const commentsRouter = require('./MVC/Routers/comments');
+const usersRouter = require('./Routers/users');
+const todosRouter = require('./Routers/todos');
+const postsRouter = require('./Routers/posts');
+const commentsRouter = require('./Routers/comments');
 
 const PORT=3000;
 
@@ -39,16 +39,3 @@ server.listen(PORT, () => {
 //   console.log(`Server is running on port ${PORT}`);
 // });
 
-
-
-
-// const express = require('express');
-// const userRoutes = require('./routes/user.routes');
-// const app = express();
-
-// app.use(express.json());
-// app.use('/api/users', userRoutes);
-
-// app.listen(3000, () => {
-//     console.log('Server is running on port 3000');
-// });
