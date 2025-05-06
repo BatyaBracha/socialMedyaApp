@@ -3,7 +3,7 @@ const tables = require('./tables_definition');
 
 const connection = mysql.createConnection({
     user: 'root',
-    password: 'aA1795aA',
+    password: 'BatyaOren20',
     database: 'project',
     port: '3306'
 });
