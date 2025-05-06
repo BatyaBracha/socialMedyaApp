@@ -9,12 +9,14 @@ const PORT=3000;
 
 const server=express();
 
-server.use(cors({
-    origin: 'http://localhost:5173',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Origin', 'X-Requested-With', 'Accept', 'x-client-key', 'x-client-token', 'x-client-secret', 'Authorization'],
-    credentials: true
-}));
+// server.use(cors({
+//     origin: 'http://localhost:5173',
+//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
+//     allowedHeaders: ['Content-Type', 'Origin', 'X-Requested-With', 'Accept', 'x-client-key', 'x-client-token', 'x-client-secret', 'Authorization'],
+//     credentials: true
+// }));
+
+server.use(cors());
 
 server.use(express.json());
 
@@ -23,7 +25,10 @@ server.use('/posts', postsRouter);
 server.use('/todos', todosRouter);
 server.use('/comments', commentsRouter);
 
-
+server.get('/', (req, res) => {
+    res.send('השרת עובד! ברוכים הבאים ל-API שלי 🚀');
+  });
+  
 server.listen(PORT, () => {
     console.log(`Listening to requests at http://localhost:${PORT}`);
 });
