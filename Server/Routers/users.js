@@ -8,6 +8,15 @@ const router = express.Router();
 router.use('/:userId/todos', todosRouter);
 router.use('/:userId/posts', postsRouter);
 
+router.get('/', async (req, res) => {
+    try {
+      const users = await dal.getAll('users', {});
+      res.status(200).json(users);
+    } catch (err) {
+      console.error('Error retrieving users:', err);
+      res.status(500).json({ error: 'Failed to fetch users' });
+    }
+  });
 router.get('/:userName/:userPassword', (req, res) => {
     console.log("hi");
 

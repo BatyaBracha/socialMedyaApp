@@ -3,6 +3,7 @@ const crudQuery = require('./crudQuerys');
 const arrDetailsToQuery = require('./getDetailsArrToQuery');
 
 const connection = mysql.createConnection({
+    host: 'localhost',
     user: 'root',
     password: 'BatyaOren20',
     database: 'project',

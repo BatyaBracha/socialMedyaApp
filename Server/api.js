@@ -27,8 +27,8 @@ server.use('/comments', commentsRouter);
 
 server.get('/', (req, res) => {
     res.send('השרת עובד! ברוכים הבאים ל-API שלי 🚀');
-  });
-  
+});
+
 server.listen(PORT, () => {
     console.log(`Listening to requests at http://localhost:${PORT}`);
 });

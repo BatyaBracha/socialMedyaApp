@@ -64,7 +64,7 @@ function getQuery(type) {
             `;
         case "users":
             return sql = `
-            SELECT user_info.*
+            SELECT *
             FROM user_info
             WHERE user_info.user_id = ?  
             `;
