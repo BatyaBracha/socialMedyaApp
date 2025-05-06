@@ -12,17 +12,7 @@ CREATE TABLE IF NOT EXISTS user_info (
   user_name VARCHAR(255) NOT NULL,
   name VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
-  street VARCHAR(255) NOT NULL,
-  suite VARCHAR(255) NOT NULL,
-  city VARCHAR(255) NOT NULL,
-  zipcode VARCHAR(255) NOT NULL,
-  geo_lat float NOT NULL,
-  geo_ing float NOT NULL,
-  phone VARCHAR(255) NOT NULL,
-  website VARCHAR(255) NOT NULL,
-  company_name VARCHAR(255) NOT NULL,
-  company_catch_phrase VARCHAR(255) NOT NULL,
-  company_bs VARCHAR(255) NOT NULL
+  phone VARCHAR(255) NOT NULL
 );
 `;
 
