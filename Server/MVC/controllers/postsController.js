@@ -1,19 +1,19 @@
 const Post = require('../service/postService'); // Assuming you have a Post model defined in services/postService.js
 
 // Controller for handling posts
-const postsController = {
+
     // Get all posts
-    getAllPosts: async (req, res) => {
+   async function getAllPosts(req, res) {
         try {
             const posts = await Post.find();
             res.status(200).json(posts);
         } catch (error) {
             res.status(500).json({ message: 'Error fetching posts', error });
         }
-    },
+    }
 
     // Get a single post by ID
-    getPostById: async (req, res) => {
+    async function getPostById(req, res)  {
         try {
             const post = await Post.findById(req.params.id);
             if (!post) {
@@ -23,10 +23,10 @@ const postsController = {
         } catch (error) {
             res.status(500).json({ message: 'Error fetching post', error });
         }
-    },
+    }
 
     // Create a new post
-    createPost: async (req, res) => {
+    async function createPost(req, res)  {
         try {
             const newPost = new Post(req.body);
             const savedPost = await newPost.save();
@@ -34,10 +34,10 @@ const postsController = {
         } catch (error) {
             res.status(500).json({ message: 'Error creating post', error });
         }
-    },
+    }
 
     // Update a post by ID
-    updatePost: async (req, res) => {
+    async function updatePost(req, res)  {
         try {
             const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, {
                 new: true,
@@ -50,10 +50,10 @@ const postsController = {
         } catch (error) {
             res.status(500).json({ message: 'Error updating post', error });
         }
-    },
+    }
 
     // Delete a post by ID
-    deletePost: async (req, res) => {
+    async function deletePost(req, res) {
         try {
             const deletedPost = await Post.findByIdAndDelete(req.params.id);
             if (!deletedPost) {
@@ -63,7 +63,13 @@ const postsController = {
         } catch (error) {
             res.status(500).json({ message: 'Error deleting post', error });
         }
-    },
-};
+    }
 
-module.exports = postsController;
+
+module.exports = {
+    getAllPosts,
+    getPostById,
+    createPost,
+    updatePost,
+    deletePost,
+};

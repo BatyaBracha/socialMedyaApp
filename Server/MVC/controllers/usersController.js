@@ -2,6 +2,7 @@ const userService = require('../service/userService');
 
 async function getUsers(req, res) {
     try {
+        console.log('Received request to /users');
         const users = await userService.getAllUsers();
         res.json(users);
     } catch (err) {

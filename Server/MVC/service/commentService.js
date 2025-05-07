@@ -1,15 +1,14 @@
 const pool = require('../models/connection');
 
 // פונקציה לקבל את כל התגובות
-const getAllComments = async () => {
+async function getAllComments() {
     try {
         console.log('Executing query to fetch all comments...');
         const [rows] = await pool.query('SELECT * FROM comments');
         console.log('Query result:', rows);
         return rows;
     } catch (error) {
-        console.error('Error in getAllComments:', error);
-        throw error;
+        console.error('Error in getAllComments in service:', error);
     }
 };
 
