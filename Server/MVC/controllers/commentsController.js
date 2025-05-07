@@ -5,9 +5,7 @@ const commentService = require('../service/commentService');
     async function getAllComments(req, res) {
         try {
             debugger;
-            console.log('Received request to /comments');
             const comments = await commentService.getAllComments();
-            console.log('Comments fetched:', comments);
             res.json(comments);
         } catch (error) {
             console.error('Error fetching comments:', error.stack || error.message || error);
@@ -25,8 +23,8 @@ const commentService = require('../service/commentService');
             }
             res.status(200).json(comment);
         } catch (error) {
-            console.error('Error fetching comment:', error);
-            res.status(500).json({ message: 'Error fetching comment', error: error.message });
+            console.error('Error fetching comments:', error.stack || error.message || error);
+            res.status(500).json({ message: 'Error fetching comments', error });
         }
     }
 

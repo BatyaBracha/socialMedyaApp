@@ -14,7 +14,7 @@ async function getAllComments() {
 
 // פונקציה לקבל תגובה לפי ID
 async function getCommentById(commentId) {
-    const [rows] = await pool.query('SELECT * FROM comments WHERE id = ?', [commentId]);
+    const [rows] = await pool.query('SELECT * FROM comments WHERE id = ?', [Number(commentId)]);
     return rows[0];
 }
 
