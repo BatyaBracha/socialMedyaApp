@@ -1,4 +1,4 @@
-const db = require('../Models/db'); // כאן אנחנו מייבאים את מודול החיבור לדאטה
+const db = require('../models/connection'); // כאן אנחנו מייבאים את מודול החיבור לדאטה
 
 // פונקציה לקבל את כל הפוסטים
 const getAllPosts = async () => {

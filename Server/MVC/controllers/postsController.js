@@ -1,4 +1,4 @@
-const Post = require('../models/Post');
+const Post = require('../service/postService'); // Assuming you have a Post model defined in services/postService.js
 
 // Controller for handling posts
 const postsController = {

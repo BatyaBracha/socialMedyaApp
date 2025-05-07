@@ -1,9 +1,9 @@
-const Todo = require('../models/todoModel');
+const Todo = require('../service/todoService'); // Assuming you have a Todo model defined in services/todoService.j
 
 // Get all todos
 const getAllTodos = async (req, res) => {
     try {
-        const todos = await Todo.find();
+        const todos = await todoService.getAllTodos();
         res.status(200).json(todos);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching todos', error });
@@ -14,7 +14,7 @@ const getAllTodos = async (req, res) => {
 const getTodoById = async (req, res) => {
     const { id } = req.params;
     try {
-        const todo = await Todo.findById(id);
+        const todo = await todoService.getTodoById(id);
         if (!todo) {
             return res.status(404).json({ message: 'Todo not found' });
         }

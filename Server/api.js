@@ -1,29 +1,44 @@
 const express=require('express');
 const cors = require('cors');
-const usersRouter = require('./MVC/Routers/users');
-const todosRouter = require('./MVC/Routers/todos');
-const postsRouter = require('./MVC/Routers/posts');
-const commentsRouter = require('./MVC/Routers/comments');
+
+const usersRouter = require('./MVC/routes/users');
+const todosRouter = require('./MVC/routes/todos');
+const postsRouter = require('./MVC/routes/posts');
+const commentsRouter = require('./MVC/routes/comments');
 
 const PORT=3000;
 
 const server=express();
 
-// server.use(cors({
-//     origin: 'http://localhost:5173',
-//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
-//     allowedHeaders: ['Content-Type', 'Origin', 'X-Requested-With', 'Accept', 'x-client-key', 'x-client-token', 'x-client-secret', 'Authorization'],
-//     credentials: true
-// }));
+const db = require('./MVC/models/connection');
+
+db.query('SELECT 1')
+    .then(() => console.log('Database connection successful'))
+    .catch((err) => console.error('Database connection failed:', err));
 
 server.use(cors());
 
 server.use(express.json());
 
-server.use('/users', usersRouter);
-server.use('/posts', postsRouter);
-server.use('/todos', todosRouter);
-server.use('/comments', commentsRouter);
+server.use('/users', (req, res, next) => {
+    console.log('Request to /users');
+    next();
+}, usersRouter);
+
+server.use('/posts', (req, res, next) => {
+    console.log('Request to /posts');
+    next();
+}, postsRouter);
+
+server.use('/todos', (req, res, next) => {
+    console.log('Request to /todos');
+    next();
+}, todosRouter);
+
+server.use('/comments', (req, res, next) => {
+    console.log('Request to /comments');
+    next();
+}, commentsRouter);
 
 server.get('/', (req, res) => {
     res.send('השרת עובד! ברוכים הבאים ל-API שלי 🚀');
@@ -33,22 +48,7 @@ server.listen(PORT, () => {
     console.log(`Listening to requests at http://localhost:${PORT}`);
 });
 
-// const PORT = process.env.PORT || 3000; // או כל פורט אחר שתבחרי
+db.query('SELECT 1')
+    .then(() => console.log('Database connection successful'))
+    .catch((err) => console.error('Database connection failed:', err));
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
-
-
-
-
-// const express = require('express');
-// const userRoutes = require('./routes/user.routes');
-// const app = express();
-
-// app.use(express.json());
-// app.use('/api/users', userRoutes);
-
-// app.listen(3000, () => {
-//     console.log('Server is running on port 3000');
-// });

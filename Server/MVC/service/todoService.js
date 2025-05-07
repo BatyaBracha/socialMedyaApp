@@ -1,4 +1,4 @@
-const db = require('../Models/db');
+const db = require('../models/connection');
 
 // פונקציה לקבל את כל ה-todos
 const getAllTodos = async () => {

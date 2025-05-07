@@ -1,32 +1,39 @@
-const db = require('../Models/db');
+const pool = require('../models/connection');
 
 // פונקציה לקבל את כל התגובות
 const getAllComments = async () => {
-    const [rows] = await db.execute('SELECT * FROM comments');
-    return rows;
+    try {
+        console.log('Executing query to fetch all comments...');
+        const [rows] = await pool.query('SELECT * FROM comments');
+        console.log('Query result:', rows);
+        return rows;
+    } catch (error) {
+        console.error('Error in getAllComments:', error);
+        throw error;
+    }
 };
 
 // פונקציה לקבל תגובה לפי ID
-const getCommentById = async (commentId) => {
-    const [rows] = await db.execute('SELECT * FROM comments WHERE id = ?', [commentId]);
+async function getCommentById(commentId) {
+    const [rows] = await pool.query('SELECT * FROM comments WHERE id = ?', [commentId]);
     return rows[0];
-};
+}
 
 // פונקציה להוסיף תגובה חדשה
-const createComment = async (postId, name, email, body) => {
-    const [result] = await db.execute('INSERT INTO comments (post_id, name, email, body) VALUES (?, ?, ?, ?)', [postId, name, email, body]);
+async function createComment(postId, name, email, body) {
+    const [result] = await pool.query('INSERT INTO comments (post_id, name, email, body) VALUES (?, ?, ?, ?)', [postId, name, email, body]);
     return result.insertId;
-};
+}
 
 // פונקציה לעדכן תגובה
-const updateComment = async (commentId, name, email, body) => {
-    await db.execute('UPDATE comments SET name = ?, email = ?, body = ? WHERE id = ?', [name, email, body, commentId]);
-};
+async function updateComment(commentId, name, email, body) {
+    await pool.query('UPDATE comments SET name = ?, email = ?, body = ? WHERE id = ?', [name, email, body, commentId]);
+}
 
 // פונקציה למחוק תגובה
-const deleteComment = async (commentId) => {
-    await db.execute('DELETE FROM comments WHERE id = ?', [commentId]);
-};
+async function deleteComment(commentId) {
+    await pool.query('DELETE FROM comments WHERE id = ?', [commentId]);
+}
 
 module.exports = {
     getAllComments,
