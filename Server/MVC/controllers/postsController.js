@@ -5,9 +5,13 @@ const Post = require('../service/postService'); // Assuming you have a Post mode
     // Get all posts
    async function getAllPosts(req, res) {
         try {
-            const posts = await Post.find();
+            console.log("post controller")
+            const posts = await Post.getAllPosts();
             res.status(200).json(posts);
+            console.log("success post controller");
+            
         } catch (error) {
+            console.error('Error fetching posts:', error.stack || error.message || error);
             res.status(500).json({ message: 'Error fetching posts', error });
         }
     }

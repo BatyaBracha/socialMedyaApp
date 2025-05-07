@@ -2,6 +2,8 @@ const pool = require('../models/connection'); // כאן אנחנו מייבאי�
 
 // פונקציה לקבל את כל הפוסטים
 const getAllPosts = async () => {
+    console.log("post service");
+    
     const [rows] = await pool.query('SELECT * FROM user_posts');
     return rows;
 };
