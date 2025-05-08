@@ -3,10 +3,8 @@ const todoService = require('../service/todoService'); // Assuming you have a To
 // Get all todos
 const getAllTodos = async (req, res) => {
     try {
-        console.log("todo controller");
         const todos = await todoService.getAllTodos();
         res.status(200).json(todos);
-        console.log("success todo controller");
     } catch (error) {
         console.error('Error fetching todos:', error.stack || error.message || error);
         res.status(500).json({ message: 'Error fetching todos', error });
@@ -29,15 +27,10 @@ const getTodoById = async (req, res) => {
 
 // Create a new todo
 const createTodo = async (req, res) => {
-    const { title, description, completed } = req.body;
+    const { userId, title, completed } = req.body;
     try {
-        const newTodo = new Todo({
-            title,
-            description,
-            completed: completed || false,
-        });
-        const savedTodo = await newTodo.save();
-        res.status(201).json(savedTodo);
+        const newTodoId = await todoService.createTodo(userId, title, completed || false);
+        res.status(201).json({ id: newTodoId, userId, title, completed: completed || false });
     } catch (error) {
         res.status(500).json({ message: 'Error creating todo', error });
     }
@@ -45,18 +38,11 @@ const createTodo = async (req, res) => {
 
 // Update a todo by ID
 const updateTodo = async (req, res) => {
-    const { id } = req.params;
-    const { title, description, completed } = req.body;
     try {
-        const updatedTodo = await Todo.findByIdAndUpdate(
-            id,
-            { title, description, completed },
-            { new: true }
-        );
-        if (!updatedTodo) {
-            return res.status(404).json({ message: 'Todo not found' });
-        }
-        res.status(200).json(updatedTodo);
+    const  id  = req.params.id;
+    const { title, completed } = req.body;
+        await todoService.updateTodo(id, title, completed);
+        res.status(200).json({ message: 'Todo updated successfully' });
     } catch (error) {
         res.status(500).json({ message: 'Error updating todo', error });
     }
@@ -64,10 +50,10 @@ const updateTodo = async (req, res) => {
 
 // Delete a todo by ID
 const deleteTodo = async (req, res) => {
-    const { id } = req.params;
     try {
-        const deletedTodo = await Todo.findByIdAndDelete(id);
-        if (!deletedTodo) {
+        const id = req.params.id;
+        const deleted = await todoService.deleteTodo(id);
+        if (!deleted) {
             return res.status(404).json({ message: 'Todo not found' });
         }
         res.status(200).json({ message: 'Todo deleted successfully' });

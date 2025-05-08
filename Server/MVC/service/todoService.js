@@ -14,8 +14,11 @@ const getTodoById = async (todoId) => {
 };
 
 // פונקציה להוסיף todo חדש
-const createTodo = async (userId, title, complete) => {
-    const [result] = await pool.query('INSERT INTO user_todos (user_id, title, complete) VALUES (?, ?, ?)', [userId, title, complete]);
+const createTodo = async (userId, title, completed) => {
+    const [result] = await pool.query(
+        'INSERT INTO user_todos (user_id, title, complete) VALUES (?, ?, ?)',
+        [userId, title, completed]
+    );
     return result.insertId;
 };
 
@@ -26,7 +29,8 @@ const updateTodo = async (todoId, title, complete) => {
 
 // פונקציה למחוק todo
 const deleteTodo = async (todoId) => {
-    await pool.query('DELETE FROM user_todos WHERE id = ?', [todoId]);
+    const [result] = await pool.query('DELETE FROM user_todos WHERE id = ?', [todoId]);
+    return result.affectedRows > 0; // true אם נמחק משהו, false אם לא
 };
 
 module.exports = {

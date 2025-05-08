@@ -2,7 +2,6 @@ const userService = require('../service/userService');
 
 async function getUsers(req, res) {
     try {
-        console.log('Received request to /users');
         const users = await userService.getAllUsers();
         res.json(users);
     } catch (err) {
@@ -79,10 +78,6 @@ async function deleteUser(req, res) {
         res.status(500).json({ error: 'Failed to delete user' });
     }
 }   
-
-
-
-
 module.exports = {
     getUsers,
     addUser,

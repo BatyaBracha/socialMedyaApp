@@ -19,18 +19,3 @@ router.delete('/:id', todosController.deleteTodo);
 
 module.exports = router;
 
-// const express = require('express');
-// const dal = require('../models/dal');
-// const router = express.Router();
-
-// router.get('/:userID', );
-
-// router.get('/:userId/:todoId',);
-
-// router.put('/:userId/:todoId',);
-
-// router.post('/',);
-
-// router.delete('/:userId/:todoId',);
-
-// module.exports = router;

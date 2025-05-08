@@ -10,7 +10,7 @@ const getAllPosts = async () => {
 
 // פונקציה לקבל פוסט לפי ID
 const getPostById = async (postId) => {
-    const [rows] = await pool.query('SELECT * FROM user_posts WHERE id = ?', [postId]);
+    const [rows] = await pool.query('SELECT * FROM user_posts WHERE id = ?', [Number(postId)]);
     return rows[0];
 };
 
@@ -27,8 +27,10 @@ const updatePost = async (postId, title, body) => {
 
 // פונקציה למחוק פוסט
 const deletePost = async (postId) => {
-    await pool.query('DELETE FROM user_posts WHERE id = ?', [postId]);
+    const [result] = await pool.query('DELETE FROM user_posts WHERE id = ?', [postId]);
+    return result.affectedRows > 0;
 };
+
 
 module.exports = {
     getAllPosts,
