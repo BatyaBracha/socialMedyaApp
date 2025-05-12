@@ -11,18 +11,22 @@ const getTodoById = async (todoId) => {
 };
 
 // פונקציה להוסיף todo חדש
-const createTodo = async (userId, title, completed) => {
+const createTodo = async (userId, title, complete) => {
     const [result] = await pool.query(
         'INSERT INTO user_todos (user_id, title, complete) VALUES (?, ?, ?)',
-        [userId, title, completed]
+        [userId, title, complete]
     );
     return result.insertId;
 };
 
 // פונקציה לעדכן todo
 const updateTodo = async (todoId, title, complete) => {
+    if (title === undefined || complete === undefined) {
+        throw new Error('Missing title or complete');
+    }
     await pool.query('UPDATE user_todos SET title = ?, complete = ? WHERE id = ?', [title, complete, todoId]);
 };
+
 
 // פונקציה למחוק todo
 const deleteTodo = async (todoId) => {

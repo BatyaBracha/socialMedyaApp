@@ -40,11 +40,17 @@ const createTodo = async (req, res) => {
 // Update a todo by ID
 const updateTodo = async (req, res) => {
     try {
-    const  id  = req.params.id;
-    const { title, completed } = req.body;
-        await todoService.updateTodo(id, title, completed);
-        res.status(200).json({ message: 'Todo updated successfully' });
+        const id = req.params.id;
+        const { title, complete } = req.body;
+
+        if (title === undefined || complete === undefined) {
+            return res.status(400).json({ message: 'Missing title or complete' });
+        }
+        await todoService.updateTodo(id, title, complete);
+        const updatedTodo = await todoService.getTodoById(id);
+        res.status(200).json(updatedTodo);
     } catch (error) {
+        console.error('Error updating todo:', error);
         res.status(500).json({ message: 'Error updating todo', error });
     }
 };
