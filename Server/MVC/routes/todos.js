@@ -6,8 +6,8 @@ const todosController = require('../controllers/todosController');
 // router.get('/', todosController.getAllTodos);
 
 // קבלת todo לפי ID
-router.get('/users/:userId', todosController.getTodoById);
-router.get('/:Id', todosController.getTodosByUserId);
+router.get('/users/:userId', todosController.getTodosByUserId);
+router.get('/:Id', todosController.getTodoById);
 
 
 // יצירת todo חדש
