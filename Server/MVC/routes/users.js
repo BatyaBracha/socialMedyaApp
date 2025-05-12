@@ -1,9 +1,7 @@
 const express = require('express');
 const userController = require('../controllers/usersController');
-
 const router = express.Router();
 
-// נתיבים
 router.get('/', userController.getUsers);
 router.post('/', userController.addUser);
 router.get('/username/:userName', userController.getUserByName);

@@ -1,15 +1,5 @@
 const todoService = require('../service/todoService'); // Assuming you have a Todo model defined in services/todoService.j
 
-// Get all todos
-const getAllTodos = async (req, res) => {
-    try {
-        const todos = await todoService.getAllTodos();
-        res.status(200).json(todos);
-    } catch (error) {
-        console.error('Error fetching todos:', error.stack || error.message || error);
-        res.status(500).json({ message: 'Error fetching todos', error });
-    }
-};
 const getTodosByUserId = async (req, res) => {
     const { userId } = req.params;
     try {
@@ -38,10 +28,10 @@ const getTodoById = async (req, res) => {
 
 // Create a new todo
 const createTodo = async (req, res) => {
-    const { userId, title, completed } = req.body;
+    const { userId, title, complete } = req.body;
     try {
-        const newTodoId = await todoService.createTodo(userId, title, completed || false);
-        res.status(201).json({ id: newTodoId, userId, title, completed: completed || false });
+        const newTodoId = await todoService.createTodo(userId, title, complete || false);
+        res.status(201).json({ id: newTodoId, userId, title, completed: complete || false });
     } catch (error) {
         res.status(500).json({ message: 'Error creating todo', error });
     }
@@ -74,7 +64,6 @@ const deleteTodo = async (req, res) => {
 };
 
 module.exports = {
-    getAllTodos,
     getTodoById,
     createTodo,
     updateTodo,

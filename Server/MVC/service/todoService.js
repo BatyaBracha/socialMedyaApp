@@ -1,11 +1,5 @@
 const pool = require('../models/connection');
 
-// פונקציה לקבל את כל ה-todos
-const getAllTodos = async () => {
-    console.log("todo service");
-    const [rows] = await pool.query('SELECT * FROM user_todos');
-    return rows;
-};
 const getTodosByUserId = async (userId) => {
     const [rows] = await pool.query('SELECT * FROM user_todos WHERE user_id = ?', [userId]);
     return rows;
@@ -37,7 +31,6 @@ const deleteTodo = async (todoId) => {
 };
 
 module.exports = {
-    getAllTodos,
     getTodoById,
     createTodo,
     updateTodo,
