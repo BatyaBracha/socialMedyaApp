@@ -19,7 +19,7 @@ const Todos = () => {
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/todos?userId=${user.id}`);
+        const response = await axios.get(`http://localhost:3000/todos/users/${user.id}`);
         setTodos(response.data);
         setDisplayTodos(response.data)
       } catch (err) {

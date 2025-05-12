@@ -10,6 +10,17 @@ const getAllTodos = async (req, res) => {
         res.status(500).json({ message: 'Error fetching todos', error });
     }
 };
+const getTodosByUserId = async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const todos = await todoService.getTodosByUserId(userId);
+        res.status(200).json(todos);
+    } catch (error) {
+        console.error('Error fetching todos by userId:', error);
+        res.status(500).json({ message: 'Error fetching todos by userId', error });
+    }
+};
+
 
 // Get a single todo by ID
 const getTodoById = async (req, res) => {
@@ -68,4 +79,5 @@ module.exports = {
     createTodo,
     updateTodo,
     deleteTodo,
+    getTodosByUserId
 };

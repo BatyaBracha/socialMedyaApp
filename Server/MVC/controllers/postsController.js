@@ -41,7 +41,8 @@ const postService = require('../service/postService'); // Assuming you have a Po
         try {
             const { title, body, userId } = req.body;
             const insertId = await postService.createPost(title, body, userId);
-            res.status(201).json({ message: 'Post created', id: insertId });
+            const newPost = { id: insertId, title, body, userId }; // צור אובייקט פוסט מלא
+            res.status(201).json(newPost); // החזר אותו
         } catch (error) {
             console.error('Error creating post:', error.message);
             res.status(500).json({ message: 'Error creating post', error });

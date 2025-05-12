@@ -20,20 +20,17 @@ async function addUser(req, res) {
     }
 }
 
-async function login(req, res) {
+async function getUserByNameAndPassword(req, res) {
     try {
         const { userName, password } = req.body;
-
         const userInPasswords = await userService.getUserByNameAndPassword(userName, password);
         if (!userInPasswords) {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
-
         const userInfo = await userService.getUserByName(userName);
         if (!userInfo) {
             return res.status(404).json({ error: 'User not found in info table' });
         }
-
         res.json(userInfo);
     } catch (err) {
         res.status(500).json({ error: 'Login failed' });
@@ -58,19 +55,6 @@ async function getUserByName(req, res) {
     try {
         const userName = req.params.userName;
         const user = await userService.getUserByName(userName);
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-        res.json(user);
-    } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch user' });
-    }
-}
-
-async function getUserByNameAndPassword(req, res) {
-    try {
-        const { userName, userPassword } = req.params;
-        const user = await userService.getUserByNameAndPassword(userName, userPassword);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
@@ -113,5 +97,4 @@ module.exports = {
     getUserByNameAndPassword,
     updateUser,
     deleteUser,
-    login
 };

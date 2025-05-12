@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 const todosController = require('../controllers/todosController');
 
-// קבלת כל ה-todos
-router.get('/', todosController.getAllTodos);
+// // קבלת כל ה-todos
+// router.get('/', todosController.getAllTodos);
 
 // קבלת todo לפי ID
-router.get('/:id', todosController.getTodoById);
+router.get('/users/:userId', todosController.getTodoById);
+router.get('/:Id', todosController.getTodosByUserId);
+
 
 // יצירת todo חדש
 router.post('/', todosController.createTodo);

@@ -42,7 +42,7 @@ const Posts = () => {
 
   const handleShowUserPosts = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/posts/userId/${user.id}`);
+      const response = await axios.get(`http://localhost:3000/posts/users/${user.id}`);
       setPosts(response.data);
       setShowAllPosts(false);
     } catch (err) {

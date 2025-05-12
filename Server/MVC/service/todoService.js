@@ -6,7 +6,10 @@ const getAllTodos = async () => {
     const [rows] = await pool.query('SELECT * FROM user_todos');
     return rows;
 };
-
+const getTodosByUserId = async (userId) => {
+    const [rows] = await pool.query('SELECT * FROM user_todos WHERE user_id = ?', [userId]);
+    return rows;
+};
 // פונקציה לקבל todo לפי ID
 const getTodoById = async (todoId) => {
     const [rows] = await pool.query('SELECT * FROM user_todos WHERE id = ?', [todoId]);
@@ -39,4 +42,5 @@ module.exports = {
     createTodo,
     updateTodo,
     deleteTodo,
+    getTodosByUserId
 };
