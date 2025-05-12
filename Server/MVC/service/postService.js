@@ -3,10 +3,15 @@ const pool = require('../models/connection'); // כאן אנחנו מייבאי�
 // פונקציה לקבל את כל הפוסטים
 const getAllPosts = async () => {
     console.log("post service");
-    
+
     const [rows] = await pool.query('SELECT * FROM user_posts');
     return rows;
 };
+
+const getUserPosts = async (userId) => {
+    const [rows] = await pool.query('SELECT * FROM user_posts WHERE user_id = ?', [userId]);
+    return rows;
+}
 
 // פונקציה לקבל פוסט לפי ID
 const getPostById = async (postId) => {
@@ -34,6 +39,7 @@ const deletePost = async (postId) => {
 
 module.exports = {
     getAllPosts,
+    getUserPosts,
     getPostById,
     createPost,
     updatePost,

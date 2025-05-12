@@ -20,8 +20,6 @@ async function getUserById(userId) {
 }
 
 async function getUserByName(userName) {
-    console.log("in DB", userName);
-    
     const [rows] = await pool.query('SELECT * FROM user_info WHERE user_name = ?', [userName]);
     return rows[0];
 }
@@ -31,14 +29,21 @@ async function getUserByNameAndPassword(userName, userPassword) {
     return rows[0];
 }
 
-async function updateUser(userId, userName, password) {
-    const [result] = await pool.query('UPDATE passwords SET user_name = ?, password = ? WHERE user_id = ?', [userName, password, userId]);
+async function updateUserDetails(userId, name, email, phone) {
+    const [result] = await pool.query('UPDATE user_info SET name = ? , email = ?, phone = ? WHERE user_id = ?', [name, email, phone, userId]);
+
+    return result.affectedRows > 0;
+}
+
+async function updateUserPassword(password, userId) {
+    const [result] = await pool.query('UPDATE passwords SET password = ? WHERE user_id = ?', [password, userId]);
     return result.affectedRows > 0;
 }
 
 async function deleteUser(userId) {
     const [result] = await pool.query('DELETE FROM passwords WHERE user_id = ?', [userId]);
-    return result.affectedRows > 0;
+    const [result2] = await pool.query('DELETE FROM user_info WHERE user_id = ?', [userId]);
+    return result.affectedRows > 0 && result2.affectedRows > 0;
 }
 module.exports = {
     getAllUsers,
@@ -47,6 +52,7 @@ module.exports = {
     getUserById,
     getUserByName,
     getUserByNameAndPassword,
-    updateUser,
+    updateUserDetails,
+    updateUserPassword,
     deleteUser
 };

@@ -6,7 +6,8 @@ const router = express.Router();
 // נתיבים
 router.get('/', userController.getUsers);
 router.post('/', userController.addUser);
-router.get('/name/:userName', userController.getUserByName);
+router.get('/username/:userName', userController.getUserByName);
+router.post('/login', userController.login);
 router.get('/login/:userName/:userPassword', userController.getUserByNameAndPassword);
 router.get('/:userId', userController.getUserById);
 router.put('/:userId', userController.updateUser);

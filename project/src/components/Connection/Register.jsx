@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
 import axios from 'axios';
-import styles from './register.module.css'; 
+import styles from './register.module.css';
 
 const Register = () => {
   const [NextRegistration, setNextRegistration] = useState(true);
@@ -12,7 +12,7 @@ const Register = () => {
   const [userDetails, setUserDetails] = useState({
     fullName: '',
     email: '',
-    phone:''
+    phone: ''
   });
   const [error, setError] = useState('');
   const { login } = useUser();
@@ -20,35 +20,63 @@ const Register = () => {
 
   const handleInitialRegister = async (e) => {
     e.preventDefault();
+
     if (password !== verifyPassword) {
       setError('Passwords do not match.');
       return;
     }
-    try {
-      const response = await axios.get(`http://localhost:3000/users?username=${username}`);
-      if (response.data.length > 0) {
-        setError('Username already exists.');
-      } else {
-        setNextRegistration(false)
-        setError('');
-      }
-    } catch (err) {
-      setError('An error occurred. Please try again.');
-    }
-  };
 
-  const handleCompleteRegistration = async (e) => {
-    e.preventDefault();
     try {
-    const newUser = {username,website: password,name:userDetails.fullName,email:userDetails.email,phone:userDetails.phone};
-    const response = await axios.post('http://localhost:3000/users/', newUser);
-    const user = { username: response.data.username, id: response.data.id,email:response.data.email  };
-      login(user);
-      navigate('/home');
+      await axios.get(`http://localhost:3000/users/username/${username}`);
+      // אם הצליח – המשתמש כבר קיים
+      setError('Username already exists.');
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      if (err.response && err.response.status === 404) {
+        // המשתמש לא קיים – אפשר להמשיך לרישום
+        setNextRegistration(false);
+        setError('');
+      } else {
+        // שגיאה אמיתית בשרת
+        setError('An error occurred. Please try again.');
+      }
     }
   };
+    
+  const handleCompleteRegistration = async (e) => {
+      e.preventDefault();
+      try {
+        // שלב 1: יצירת משתמש בסיסי (userName + password)
+        const newUser = {
+          userName: username,
+          password: password
+        };
+
+        const response = await axios.post('http://localhost:3000/users/', newUser);
+        const userId = response.data.userId;
+
+        // שלב 2: עדכון פרטים נוספים (name, email, phone)
+        const userDetailsUpdate = {
+          name: userDetails.fullName,
+          email: userDetails.email,
+          phone: userDetails.phone
+        };
+
+        await axios.put(`http://localhost:3000/users/${userId}`, userDetailsUpdate);
+
+        // התחברות ושמירה בקונטקסט
+        const user = {
+          id: userId,
+          username: username,
+          email: userDetails.email
+        };
+
+        login(user);
+        navigate('/home');
+      } catch (err) {
+        setError('An error occurred. Please try again.');
+      }
+    };
+  
   return (
     <div className={styles.container}>
       <h2>Register</h2>
@@ -130,7 +158,7 @@ const Register = () => {
         </form>
       )}
     </div>
-  );  
+  );
 };
 
 export default Register;

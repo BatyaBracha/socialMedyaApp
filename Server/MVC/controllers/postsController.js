@@ -13,6 +13,16 @@ const postService = require('../service/postService'); // Assuming you have a Po
         }
     }
 
+       async function getUserPosts(req, res) {
+        try {
+            const posts = await postService.getUserPosts(req.params.userId);
+            res.status(200).json(posts);            
+        } catch (error) {
+            console.error('Error fetching posts:', error.stack || error.message || error);
+            res.status(500).json({ message: 'Error fetching posts', error });
+        }
+    }
+
     // Get a single post by ID
     async function getPostById(req, res)  {
         try {
@@ -68,6 +78,7 @@ const postService = require('../service/postService'); // Assuming you have a Po
 
 module.exports = {
     getAllPosts,
+    getUserPosts,
     getPostById,
     createPost,
     updatePost,

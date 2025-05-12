@@ -11,22 +11,25 @@ const Login = () => {
   const { login } = useUser();
   const navigate = useNavigate();
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await axios.get(`http://localhost:3000/users?username=${username}`);
-      if (response.data[0].website === password&&response.data[0].username === username)
-      {
-        const user = { username, id: response.data[0].id,email:response.data[0].email };
-        login(user);
-        navigate('/home');
-      } else {
-        setError('Username or password is incorrect.');
-      }
-    } catch (err) {
-      setError('You are not registered, please register.');
-    }
-  };
+const handleLogin = async (event) => {
+  event.preventDefault();
+  try {
+    const response = await axios.post(`http://localhost:3000/users/login`, {
+      userName: username,
+      password
+    });
+
+    const user = {
+      username: response.data.user_name,
+      id: response.data.user_id,
+      email: response.data.email
+    };
+    login(user);
+    navigate('/home');
+  } catch (err) {
+    setError('Username or password is incorrect.');
+  }
+};
 
   return (
     <div className={styles.container}>

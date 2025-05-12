@@ -17,15 +17,15 @@ const Posts = () => {
 
   useEffect(() => {
     const fetchUserPosts = async () => {
-        handleShowUserPosts();
+      handleShowUserPosts();
     };
     fetchUserPosts();
   }, [user?.id]);
 
   useEffect(() => {
-    if(!searchQuery)
+    if (!searchQuery)
       setDisplayPosts(posts);
-   else setDisplayPosts( posts.filter((post) =>
+    else setDisplayPosts(posts.filter((post) =>
       post.id.toString().includes(searchQuery) || post.title.includes(searchQuery))
     );
   }, [posts, searchQuery]);
@@ -42,7 +42,7 @@ const Posts = () => {
 
   const handleShowUserPosts = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/posts?userId=${user.id}`);
+      const response = await axios.get(`http://localhost:3000/posts/userId/${user.id}`);
       setPosts(response.data);
       setShowAllPosts(false);
     } catch (err) {
@@ -56,7 +56,7 @@ const Posts = () => {
       return;
     }
     try {
-      const newPostData = { userId: user.id, title: newPost.title, body: newPost.body };
+      const newPostData = { title: newPost.title, body: newPost.body, userId: user.id };
       const response = await axios.post('http://localhost:3000/posts', newPostData);
       setPosts([...posts, response.data]);
       setNewPost({ title: '', body: '' });
@@ -83,60 +83,60 @@ const Posts = () => {
     <div className={styles.postsHeader}>
       <Navbar />
       <div className={styles.headerP}>
-      <div className={styles.newPostContainer}>
-        <input
-          type="text"
-          placeholder="New Post Title"
-          value={newPost.title}
-          onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
-        />
-     
-        <input
-          placeholder="New Post Body"
-          value={newPost.body}
-          onChange={(e) => setNewPost({ ...newPost, body: e.target.value })}
-        />
+        <div className={styles.newPostContainer}>
+          <input
+            type="text"
+            placeholder="New Post Title"
+            value={newPost.title}
+            onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+          />
 
-        <button onClick={handleAddPost}>➕</button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-      </div>
-      <span className={styles.showPostsContainer}>
-        <h1>Posts</h1>
-        <div>
-        {!showAllPosts ? (
-          <button onClick={handleShowAllPosts}>Show All Posts</button>
-        ) : (
-          <button onClick={handleShowUserPosts}>Show My Posts Only</button>
-        )}
+          <input
+            placeholder="New Post Body"
+            value={newPost.body}
+            onChange={(e) => setNewPost({ ...newPost, body: e.target.value })}
+          />
+
+          <button onClick={handleAddPost}>➕</button>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
-      </span>
-      <div className={styles.searchContainer}>
-        <input
-          type="text"
-          placeholder="Search by ID or Title"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+        <span className={styles.showPostsContainer}>
+          <h1>Posts</h1>
+          <div>
+            {!showAllPosts ? (
+              <button onClick={handleShowAllPosts}>Show All Posts</button>
+            ) : (
+              <button onClick={handleShowUserPosts}>Show My Posts Only</button>
+            )}
+          </div>
+        </span>
+        <div className={styles.searchContainer}>
+          <input
+            type="text"
+            placeholder="Search by ID or Title"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
       </div>
-  </div>
       <div className={styles.postsContainer}>
         {displayPosts.map((post) => (
-           <div key={post.id} className={styles.postCard}>
+          <div key={post.id} className={styles.postCard}>
             <span >{post.id}</span>
             <span>{post.title}</span>
             <div>
-            <button onClick={() => setSelectedPost(post)} style={{ marginLeft: '10px' }}>...</button>
-            {user.id == post.userId && (
-              <button
-                onClick={() => handleDeletePost(post.id)}
-                style={{ marginLeft: '10px', color: 'red' }}>🗑️
-              </button>)}
-              </div>
+              <button onClick={() => setSelectedPost(post)} style={{ marginLeft: '10px' }}>...</button>
+              {user.id == post.userId && (
+                <button
+                  onClick={() => handleDeletePost(post.id)}
+                  style={{ marginLeft: '10px', color: 'red' }}>🗑️
+                </button>)}
+            </div>
           </div>
         ))}
       </div>
       {selectedPost && (
-        <PostDetails post={selectedPost} setSelectedPost={setSelectedPost} setPosts={setPosts}/>
+        <PostDetails post={selectedPost} setSelectedPost={setSelectedPost} setPosts={setPosts} />
       )}
     </div>
   );
