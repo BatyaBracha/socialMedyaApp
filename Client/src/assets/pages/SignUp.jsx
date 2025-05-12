@@ -30,7 +30,7 @@ function SignUp() {
       const hashed = await hashPassword(password);
       setHashedPassword(hashed);
 
-      const response = await fetch(`http://localhost:3000/users/?username=${username}`);
+      const response = await fetch(`http://localhost:3000/users?username=${username}`);
       if (!response.ok) {
         throw new Error("Unable to connect to the server");
       }
