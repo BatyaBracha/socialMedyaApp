@@ -2,7 +2,7 @@ const userService = require('../service/userService');
 
 async function getUsers(req, res) {
     try {
-        const users = await userService.getAllUsers();
+        const [users] = await userService.getAllUsers();
         res.json(users);
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch users' });
@@ -12,7 +12,8 @@ async function getUsers(req, res) {
 async function addUser(req, res) {
     try {
         const { userName, password } = req.body;
-        const userId = await userService.createUser(userName, password);
+        const userId = await userService.createUserInPasswordsTable(userName, password);
+        const user = await userService.createUser(userId, userName, "","","");
         res.status(201).json({ userId });
     } catch (err) {
         res.status(500).json({ error: 'Failed to add user' });
@@ -22,7 +23,7 @@ async function addUser(req, res) {
 async function getUserById(req, res) {
     try {
         const userId = req.params.userId;
-        const user = await userService.getUserById(userId);
+        const [user] = await userService.getUserById(userId);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
@@ -32,10 +33,15 @@ async function getUserById(req, res) {
     }
 }
 
+
 async function getUserByName(req, res) {
     try {
         const userName = req.params.userName;
-        const user = await userService.getUserByName(userName);
+        console.log("controller", userName);
+        
+        const [user] = await userService.getUserByName(userName);
+        console.log("after fetching", user);
+        
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
