@@ -1,4 +1,4 @@
-const express=require('express');
+const express = require('express');
 const cors = require('cors');
 
 const usersRouter = require('./MVC/routes/users');
@@ -6,9 +6,9 @@ const todosRouter = require('./MVC/routes/todos');
 const postsRouter = require('./MVC/routes/posts');
 const commentsRouter = require('./MVC/routes/comments');
 
-const PORT=3000;
+const PORT = 3000;
 
-const server=express();
+const server = express();
 
 const db = require('./MVC/models/connection');
 

@@ -1,4 +1,4 @@
-const todoService = require('../service/todoService'); // Assuming you have a Todo model defined in services/todoService.j
+const todoService = require('../service/todoService'); 
 
 const getTodosByUserId = async (req, res) => {
     const { userId } = req.params;
@@ -11,8 +11,6 @@ const getTodosByUserId = async (req, res) => {
     }
 };
 
-
-// Get a single todo by ID
 const getTodoById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -26,7 +24,6 @@ const getTodoById = async (req, res) => {
     }
 };
 
-// Create a new todo
 const createTodo = async (req, res) => {
     const { userId, title, complete } = req.body;
     try {
@@ -37,7 +34,6 @@ const createTodo = async (req, res) => {
     }
 };
 
-// Update a todo by ID
 const updateTodo = async (req, res) => {
     try {
         const id = req.params.id;
@@ -55,7 +51,6 @@ const updateTodo = async (req, res) => {
     }
 };
 
-// Delete a todo by ID
 const deleteTodo = async (req, res) => {
     try {
         const id = req.params.id;

@@ -1,5 +1,9 @@
 const userService = require('../service/userService');
 
+function validateInput(str) {
+    return (/[A-Z]/.test(str) && /[a-z]/.test(str) && /\d/.test(str));
+};
+
 async function getUsers(req, res) {
     try {
         const users = await userService.getAllUsers();
@@ -12,6 +16,10 @@ async function getUsers(req, res) {
 async function addUser(req, res) {
     try {
         const { userName, password } = req.body;
+        if (!validateInput(password)) {
+            res.status(400).json({ error: 'Failed to add user' });
+
+        }
         const userId = await userService.createUserInPasswordsTable(userName, password);
         const user = await userService.createUser(userId, userName, "", "", "");
         res.status(201).json({ userId });
@@ -71,7 +79,7 @@ async function updateUser(req, res) {
         if (password) {
             await userService.updateUserPassword(password, userId);
         }
-        if(name || email || phone) {
+        if (name || email || phone) {
             await userService.updateUserDetails(userId, name, email, phone);
         }
         res.status(200).json({ message: 'User updated successfully' });
@@ -89,6 +97,7 @@ async function deleteUser(req, res) {
         res.status(500).json({ error: 'Failed to delete user' });
     }
 }
+
 module.exports = {
     getUsers,
     addUser,

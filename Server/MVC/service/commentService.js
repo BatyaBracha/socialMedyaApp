@@ -1,6 +1,5 @@
 const pool = require('../models/connection');
 
-// פונקציה לקבל את כל התגובות
 async function getAllComments() {
     try {
         console.log('Executing query to fetch all comments...');
@@ -11,24 +10,22 @@ async function getAllComments() {
         console.error('Error in getAllComments in service:', error);
     }
 };
+
 async function getCommentsByPostId(postId) {
     const [rows] = await pool.query('SELECT * FROM comments WHERE post_id = ?', [Number(postId)]);
     return rows;
 }
 
-// פונקציה לקבל תגובה לפי ID
 async function getCommentById(commentId) {
     const [rows] = await pool.query('SELECT * FROM comments WHERE id = ?', [Number(commentId)]);
     return rows[0];
 }
 
-// פונקציה להוסיף תגובה חדשה
 async function createComment(postId, name, email, body) {
     const [result] = await pool.query('INSERT INTO comments (post_id, name, email, body) VALUES (?, ?, ?, ?)', [postId, name, email, body]);
     return result.insertId;
 }
 
-// פונקציה לעדכן תגובה
 async function updateComment(commentId, name, email, body) {
     await pool.query('UPDATE comments SET name = ?, email = ?, body = ? WHERE id = ?', [name, email, body, commentId]);
 }
