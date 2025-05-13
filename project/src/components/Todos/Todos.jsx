@@ -19,7 +19,7 @@ const Todos = () => {
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/todos?userId=${user.id}`);
+        const response = await axios.get(`http://localhost:3000/todos/users/${user.id}`);
         setTodos(response.data);
         setDisplayTodos(response.data)
       } catch (err) {
@@ -75,24 +75,25 @@ const Todos = () => {
   };
 
   const handleUpdateTodo = async (todo) => {
-    try {
-      const updatedTodo = { ...todo, completed: !todo.completed };
-      await axios.put(`http://localhost:3000/todos/${todo.id}`, updatedTodo);
-      setTodos(todos.map((t) => (t.id === todo.id ? updatedTodo : t)));
-    } catch (err) {
-      console.error('Failed to update todo:', err);
-    }
+      try {
+          const updatedTodo = { ...todo, complete: !todo.complete };
+          await axios.put(`http://localhost:3000/todos/${todo.id}`, updatedTodo);
+          setTodos(todos.map((t) => (t.id === todo.id ? updatedTodo : t)));
+      } catch (err) {
+          console.error('Failed to update todo:', err);
+      }
   };
+
   const handleSaveTodo = async (todo) => {
-    try {
-      const updatedTodo = { ...todo, title: editingTitle };
-      const response = await axios.put(`http://localhost:3000/todos/${todo.id}`, updatedTodo);
-      setTodos(todos.map((t) => (t.id === todo.id ? response.data : t)));
-      setEditingTodoId(null);
-      setEditingTitle('');
-    } catch (err) {
-      console.error('Failed to save todo:', err);
-    }
+      try {
+          const updatedTodo = { ...todo, title: editingTitle, complete: todo.complete };
+          const response = await axios.put(`http://localhost:3000/todos/${todo.id}`, updatedTodo);
+          setTodos(todos.map((t) => (t.id === todo.id ? response.data : t)));
+          setEditingTodoId(null);
+          setEditingTitle('');
+      } catch (err) {
+          console.error('Failed to save todo:', err);
+      }
   };
 
   return (

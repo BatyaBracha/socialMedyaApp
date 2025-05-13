@@ -9,7 +9,6 @@ import Posts from './components/Posts/Posts';
 import { UserProvider } from './contexts/UserContext';
 import UserInfo from './components/UserInfo/UserInfo';
 import PageNotFound from './components/PageNotFound/PageNotFound';
-import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 const App = () => {
   return (
