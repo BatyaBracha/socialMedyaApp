@@ -22,9 +22,9 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
         <Route path="/users/:userId"  >
-        <Route path="todos" element={<ProtectedRoute><Todos /></ProtectedRoute>} />
-        <Route path="posts" element={<ProtectedRoute><Posts /></ProtectedRoute>} />
-        <Route path="userInfo" element={<ProtectedRoute><UserInfo /></ProtectedRoute>} />
+        <Route path="todos" element={<Todos />} />
+        <Route path="posts" element={<Posts />} />
+        <Route path="userInfo" element={<UserInfo />} />
         </Route>
         <Route path="/404" element={<PageNotFound />} />
         <Route path="*" element={<Navigate to="/404" />} />
