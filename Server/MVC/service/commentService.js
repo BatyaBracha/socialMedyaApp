@@ -11,6 +11,10 @@ async function getAllComments() {
         console.error('Error in getAllComments in service:', error);
     }
 };
+async function getCommentsByPostId(postId) {
+    const [rows] = await pool.query('SELECT * FROM comments WHERE post_id = ?', [Number(postId)]);
+    return rows;
+}
 
 // פונקציה לקבל תגובה לפי ID
 async function getCommentById(commentId) {
@@ -40,4 +44,5 @@ module.exports = {
     createComment,
     updateComment,
     deleteComment,
+    getCommentsByPostId
 };

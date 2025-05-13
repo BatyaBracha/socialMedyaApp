@@ -54,10 +54,9 @@ const postService = require('../service/postService'); // Assuming you have a Po
         try {
             const postId = req.params.id;
             const { title, body } = req.body;
-    
             await postService.updatePost(postId, title, body);
-    
-            res.status(200).json({ message: 'Post updated successfully' });
+            const updatedPost = await postService.getPostById(postId); 
+            res.status(200).json(updatedPost); 
         } catch (error) {
             res.status(500).json({ message: 'Error updating post', error });
         }

@@ -53,7 +53,7 @@ const PostDetails = (props) => {
               <p style={{ marginRight: '10px' }}>
                 <strong>Title:</strong> {post.title}
               </p>
-              {user.id == post.userId && (
+              {(user.id == post.userId || user.id == post.user_id) && (
                 <button onClick={() => setIsEditing((prev) => ({ ...prev, title: true }))}>✏️</button>
               )}
             </>
@@ -76,7 +76,7 @@ const PostDetails = (props) => {
               <p style={{ marginRight: '10px' }}>
                 <strong>Body:</strong> {post.body || 'No body content.'}
               </p>
-              {user.id == post.userId && (
+              {(user.id == post.userId || user.id == post.user_id) && (
                 <button onClick={() => setIsEditing((prev) => ({ ...prev, body: true }))}>✏️</button>
               )}
             </>

@@ -55,7 +55,8 @@ const Comments = ({ postId }) => {
       return;
     }
     try {
-      const updatedComment = { ...comment, body: editedCommentText };
+      // const updatedComment = { ...comment, body: editedCommentText };
+      const updatedComment = {...comment, name: user.name || '', email: user.email, body: editedCommentText};
       const response = await axios.put(`http://localhost:3000/comments/${comment.id}`, updatedComment);
       setComments(comments.map((updateComment) => (updateComment.id === comment.id ? response.data : updateComment)));
       setIsEditingComment(null);
@@ -122,6 +123,3 @@ const Comments = ({ postId }) => {
 };
 
 export default Comments;
-
-
-// || comment.body

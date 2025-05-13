@@ -126,7 +126,7 @@ const Posts = () => {
             <span>{post.title}</span>
             <div>
               <button onClick={() => setSelectedPost(post)} style={{ marginLeft: '10px' }}>...</button>
-              {user.id == post.userId && (
+              {(user.id == post.userId || user.id == post.user_id) && (
                 <button
                   onClick={() => handleDeletePost(post.id)}
                   style={{ marginLeft: '10px', color: 'red' }}>🗑️
