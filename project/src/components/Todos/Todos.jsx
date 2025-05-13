@@ -34,7 +34,7 @@ const Todos = () => {
     return todosList.filter((todo) => {
       if (filterCriteria === 'id') return todo.id.toString().includes(filter);
       if (filterCriteria === 'title') return todo.title.includes(filter);
-      if (filterCriteria === 'completed') return todo.completed.toString() === filter;
+      if (filterCriteria === 'complete') return todo.complete.toString() === filter;
     });
   };
 
@@ -42,7 +42,7 @@ const Todos = () => {
     return [...todosList].sort((a, b) => {
       if (sortCriteria === 'id') return a.id - b.id;
       if (sortCriteria === 'title') return a.title.localeCompare(b.title);
-      if (sortCriteria === 'completed') return a.completed - b.completed;
+      if (sortCriteria === 'complete') return a.complete - b.complete;
     });
   };
 
@@ -55,7 +55,7 @@ const Todos = () => {
   }, [todos,sortCriteria]);
 
   const handleAddTodo = async () => {
-    const newTodo = { userId: user.id, title: newTodoTitle, completed: false };
+    const newTodo = { userId: user.id, title: newTodoTitle, complete: false };
     try {
       const response = await axios.post('http://localhost:3000/todos', newTodo);
       setTodos([...todos, response.data]);
@@ -122,7 +122,7 @@ const Todos = () => {
         <select onChange={(e) => setFilterCriteria(e.target.value)}>
           <option value="title">By Title</option>
           <option value="id">By ID</option>
-          <option value="completed">By Completion</option>
+          <option value="complete">By Completion</option>
         </select>
       </div>
       <div className={styles.showTodosContainer}>
@@ -131,7 +131,7 @@ const Todos = () => {
         <option value=""></option>
           <option value="id">ID</option>
           <option value="title">Title</option>
-          <option value="completed">Completion</option>
+          <option value="complete">Completion</option>
         </select>
       </div>
       </div>
@@ -141,7 +141,7 @@ const Todos = () => {
             <span style={{ marginRight: '10px', fontWeight: 'bold' }}>#{todo.id}</span>
             <input
               type="checkbox"
-              checked={todo.completed}
+              checked={todo.complete}
               onChange={() => handleUpdateTodo(todo)}
               style={{ marginRight: '10px' }}
             />
