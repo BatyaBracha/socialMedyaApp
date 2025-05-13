@@ -58,7 +58,6 @@ async function getUserById(req, res) {
     }
 }
 
-
 async function getUserByName(req, res) {
     try {
         const userName = req.params.userName;
